@@ -1,0 +1,101 @@
+<?xml version="1.0" ?>
+
+<robot name="mrm" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  
+  <!-- BGN - Include -->
+  <xacro:include filename="$(find simple_dynamic_manipulator)/urdf/robot_parameters.xacro" />
+  <xacro:include filename="$(find simple_dynamic_manipulator)/urdf/links_joints.xacro" />
+  <!-- END - Include -->
+  
+  <!-- BGN - Robot description -->
+  <m_link_box name="${link_00_name}"
+              origin_rpy="0 0 0" origin_xyz="0 0 0.125"
+              mass="1024"
+              ixx="90.667" ixy="0" ixz="0"
+              iyy="90.667" iyz="0"
+              izz="90.667"
+              size="1 1 0.25" />
+              
+  <m_joint name="${link_00_name}__${link_01_name}" type="revolute"
+           axis_xyz="0 0 1"
+           origin_rpy="0 0 0" origin_xyz="0 0 0.25"
+           parent="base_link" child="link_01"
+           limit_e="1000" limit_l="-3.14" limit_u="3.14" limit_v="0.5" />
+           
+  <m_link_cylinder name="${link_01_name}"
+              origin_rpy="0 0 0" origin_xyz="0 0 0.125"
+              mass="157.633"
+              ixx="5.649" ixy="0" ixz="0"
+              iyy="5.649" iyz="0"
+              izz="9.655"
+              radius="0.35" length="0.25" 
+              />
+  
+  <!--  -->
+              
+  <m_joint name="${link_01_name}__${link_02_name}" type="revolute"
+           axis_xyz="0 1 0"
+           origin_rpy="0 0 0" origin_xyz="0 0 0.35"
+           parent="link_01" child="link_02"
+           limit_e="1000" limit_l="-0.26" limit_u="1.57" limit_v="0.5" />
+           
+  <m_link_cylinder name="${link_02_name}"
+              origin_rpy="0 0 0" origin_xyz="0 0 0.4"
+              mass="57.906"
+              ixx="3.233" ixy="0" ixz="0"
+              iyy="3.233" iyz="0"
+              izz="0.28953"
+              radius="0.1" length="0.8" />
+              
+  <m_joint name="${link_02_name}__${link_03_name}" type="revolute"
+           axis_xyz="0 1 0"
+           origin_rpy="0 0 0" origin_xyz="0 0 0.9"
+           parent="link_02" child="link_03"
+           limit_e="1000" limit_l="-0.26" limit_u="1.57" limit_v="0.5" />
+           
+  <m_link_cylinder name="${link_03_name}"
+              origin_rpy="0 0 0" origin_xyz="0 0 0.4"
+              mass="57.906"
+              ixx="3.233" ixy="0" ixz="0"
+              iyy="3.233" iyz="0"
+              izz="0.28953"
+              radius="0.1" length="0.8" />
+              
+  <m_joint name="${link_03_name}__${link_04_name}" type="revolute"
+           axis_xyz="0 1 0"
+           origin_rpy="0 0 0" origin_xyz="0 0 0.9"
+           parent="link_03" child="link_04"
+           limit_e="1000" limit_l="0" limit_u="1.57" limit_v="0.5" />
+           
+  <m_link_cylinder name="${link_04_name}"
+              origin_rpy="0 0 0" origin_xyz="0 0 0.2"
+              mass="28.953"
+              ixx="0.458" ixy="0" ixz="0"
+              iyy="0.458" iyz="0"
+              izz="0.145"
+              radius="0.1" length="0.4" />
+              
+  <joint name="${link_04_name}__${link_05_name}" type="fixed">
+    <axis xyz="0 0 0" />
+    <origin rpy="0 0 0" xyz="0 0 0.55" />
+    <parent link="link_04" />
+    <child link="link_05" />
+  </joint>
+           
+  <m_link_sphere name="${link_05_name}"
+              origin_rpy="0 0 0" origin_xyz="0 0 0"
+              mass="100"
+              ixx="0.333" ixy="0" ixz="0"
+              iyy="0.333" iyz="0"
+              izz="0.333"
+              radius="0.1" />
+
+              
+  <!-- END - Robot description -->
+  
+  <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+    </plugin>
+  </gazebo>
+  
+</robot>

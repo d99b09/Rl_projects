@@ -1,0 +1,19 @@
+<launch>
+
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find mrm_env)/urdf/mrm.xacro'"/>
+
+  <!-- Combine joint values -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+
+  <!-- Show in Rviz   -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find mrm_env)/launch/config.rviz" />
+
+  <node name="DynReconfServer" pkg="mrm_env" type="DynReconfServer.py"/>  
+
+  <node name="coordinate_reader" pkg="mrm_env" type="coordinate_reader.py"/>
+
+  <node name="joint_states_publisher" pkg="mrm_env" type="joint_states_publisher.py"/>
+
+  <node name="environment" pkg="mrm_env" type="environment.py" output="screen"/>
+
+</launch>
